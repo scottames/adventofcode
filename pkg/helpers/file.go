@@ -13,7 +13,7 @@ func ReadInput(year int, day int) ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	file := fmt.Sprintf("%s/%d/input/day%s.txt", gitRoot, year, strings.Trim(strconv.Itoa(day), "0"))
+	file := fmt.Sprintf("%s/input/%d/day%s.txt", gitRoot, year, strings.Trim(strconv.Itoa(day), "0"))
 	data, err := ioutil.ReadFile(file)
 	if err != nil {
 		return nil, err
