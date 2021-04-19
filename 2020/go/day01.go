@@ -56,7 +56,6 @@ func part2(input pie.Ints) {
 }
 
 func threeNumbersSum2020(list pie.Ints) pie.Ints {
-	var result pie.Ints
 	bar := func(i int) bool {
 		for _, k := range list {
 			x := twentyTwenty - (i + k)
@@ -66,8 +65,5 @@ func threeNumbersSum2020(list pie.Ints) pie.Ints {
 		}
 		return false
 	}
-	for i := 0; i < 3; i++ {
-		result = list.Filter(bar)
-	}
-	return result
+	return list.Filter(bar)
 }
