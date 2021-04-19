@@ -61,7 +61,6 @@ func threeNumbersSum2020(list pie.Ints) pie.Ints {
 		for _, k := range list {
 			x := twentyTwenty - (i + k)
 			if list.Contains(x) {
-				result.Append(x)
 				return true
 			}
 		}
