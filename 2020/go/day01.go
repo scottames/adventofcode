@@ -56,10 +56,12 @@ func part2(input pie.Ints) {
 }
 
 func threeNumbersSum2020(list pie.Ints) pie.Ints {
-	bar := func(i int) bool {
-		for _, k := range list {
-			x := twentyTwenty - (i + k)
-			if list.Contains(x) {
+	filterIndex := -1
+	bar := func(n int) bool {
+		filterIndex++
+		for i, k := range list {
+			x := twentyTwenty - (n + k)
+			if filterIndex != i && list.Contains(x) {
 				return true
 			}
 		}
