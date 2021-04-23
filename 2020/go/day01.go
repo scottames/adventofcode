@@ -16,18 +16,20 @@ func Day01() {
 	input, err := helpers.StringSplitNewlinesToInts(get)
 	helpers.ExitOnError(err)
 
-	part1(input)
-	part2(input)
+	day01Part1(input)
+	day01Part2(input)
 
 }
 
-func part1(input pie.Ints) {
+func day01Part1(input pie.Ints) int {
 	fmt.Println("--- Part One ---")
 
 	r := twoNumbersSum2020(input)
 	fmt.Println("numbers: ", r)
 	fmt.Println("product: ", r.Product())
 	fmt.Println()
+
+	return r.Product()
 }
 
 func twoNumbersSum2020(list pie.Ints) pie.Ints {
@@ -46,13 +48,15 @@ func twoNumbersSum2020(list pie.Ints) pie.Ints {
 	return result
 }
 
-func part2(input pie.Ints) {
+func day01Part2(input pie.Ints) int {
 	fmt.Println("--- Part Two ---")
 
 	r := threeNumbersSum2020(input)
 	fmt.Println("numbers: ", r)
 	fmt.Println("product: ", r.Product())
 	fmt.Println()
+
+	return r.Product()
 }
 
 func threeNumbersSum2020(list pie.Ints) pie.Ints {
