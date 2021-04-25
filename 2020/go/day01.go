@@ -6,7 +6,7 @@ import (
 	"github.com/scottames/adventofcode/pkg/helpers"
 )
 
-const twentyTwenty = 2020
+const sum = 2020
 
 // Day01 - Day 1 Part 1 & 2
 func Day01() {
@@ -33,19 +33,17 @@ func day01Part1(input pie.Ints) int {
 }
 
 func twoNumbersSum2020(list pie.Ints) pie.Ints {
-	var result pie.Ints
-	bar := func(i int) bool {
-		for _, k := range list {
-			if i+k == twentyTwenty {
+	fi := -1
+	bar := func(n int) bool {
+		fi++
+		for i, k := range list {
+			if fi != i && n+k == sum {
 				return true
 			}
 		}
 		return false
 	}
-	for i := 0; i < 2; i++ {
-		result = list.Filter(bar)
-	}
-	return result
+	return list.Filter(bar)
 }
 
 func day01Part2(input pie.Ints) int {
@@ -60,12 +58,12 @@ func day01Part2(input pie.Ints) int {
 }
 
 func threeNumbersSum2020(list pie.Ints) pie.Ints {
-	filterIndex := -1
+	fi := -1
 	bar := func(n int) bool {
-		filterIndex++
+		fi++
 		for i, k := range list {
-			x := twentyTwenty - (n + k)
-			if filterIndex != i && list.Contains(x) {
+			x := sum - (n + k)
+			if fi != i && list.Contains(x) {
 				return true
 			}
 		}

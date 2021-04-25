@@ -7,7 +7,7 @@ import (
 	"testing"
 )
 
-var day01SampleData = `1721
+const day01SampleData = `1721
 979
 366
 299
