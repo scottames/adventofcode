@@ -3,7 +3,6 @@ package aoc2019
 import (
 	"fmt"
 	"github.com/scottames/adventofcode/pkg/helpers"
-	"os"
 )
 
 // TODO: Use type / struct to solve
@@ -16,21 +15,32 @@ var example = []int{
 }
 
 // Day02 - https://adventofcode.com/2019/day/2
-func Day02() {
-	day02Part1()
-	day02Part2()
+func Day02() error {
+	err := day02Part1()
+	if err != nil {
+		return err
+	}
+	err = day02Part2()
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 // day02Part1 - AOC 2019 Day 2 Part 1
-func day02Part1() {
+func day02Part1() error {
 	fmt.Println("--- 2019 Day 2 Part 1 ---")
 	fmt.Println()
 
 	get, err := helpers.ReadInput(2019, 2)
-	helpers.ExitOnError(err)
+	if err != nil {
+		return err
+	}
 
 	input, err := helpers.StringSplitCommaToInts(get)
-	helpers.ExitOnError(err)
+	if err != nil {
+		return err
+	}
 
 	exampleOutput := computer(example, nil, nil)
 	fmt.Println("# Example\n\n", exampleOutput)
@@ -51,18 +61,24 @@ func day02Part1() {
 	output := computer(input, &noun, &verb)
 	fmt.Println(output)
 	fmt.Println()
+
+	return nil
 }
 
 // day02Part2 - AOC 2019 Day 2 Part 2
-func day02Part2() {
+func day02Part2() error {
 	fmt.Println("--- 2019 Day 2 Part 2 ---")
 	fmt.Println()
 
 	get, err := helpers.ReadInput(2019, 2)
-	helpers.ExitOnError(err)
+	if err != nil {
+		return err
+	}
 
 	input, err := helpers.StringSplitCommaToInts(get)
-	helpers.ExitOnError(err)
+	if err != nil {
+		return err
+	}
 
 	// part 2: What is 100 * noun + verb that produces out of 19690720?
 	//
@@ -71,11 +87,12 @@ func day02Part2() {
 	desired := 19690720
 	n, v, err := completeManeuver(input, desired)
 	if err != nil {
-		fmt.Println("Error! ", err)
-		os.Exit(1)
+		return err
 	}
 	fmt.Printf(" noun: %d\n verb: %d\n desired output: %d\n\n", n, v, desired)
 	fmt.Printf("100 * %d + %d = %d\n", n, v, 100*n+v)
+
+	return nil
 }
 
 // computer takes a memory input and returns a calculated output

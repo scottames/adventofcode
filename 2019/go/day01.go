@@ -7,15 +7,21 @@ import (
 )
 
 // Day01 - Day 1 Part 1 & 2
-func Day01() {
+func Day01() error {
 	get, err := helpers.ReadInput(2019, 1)
-	helpers.ExitOnError(err)
+	if err != nil {
+		return err
+	}
 
 	input, err := helpers.StringSplitNewlinesToInts(get)
-	helpers.ExitOnError(err)
+	if err != nil {
+		return err
+	}
 
 	day01Part1(input)
 	day01Part2(input)
+
+	return nil
 }
 
 func day01Part1(input pie.Ints) {

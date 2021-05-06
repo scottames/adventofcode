@@ -5,7 +5,6 @@ package main
 import (
 	"fmt"
 	aoc2019 "github.com/scottames/adventofcode/2019/go"
-
 	"github.com/scottames/adventofcode/2020/go"
 
 	"github.com/magefile/mage/mg"
@@ -13,20 +12,25 @@ import (
 )
 
 // TODO: make this more dynamic
-var aoc map[int]map[int]func() = map[int]map[int]func(){
+var aoc map[int]map[int]func() error = map[int]map[int]func() error{
 	2019: {
 		01: aoc2019.Day01,
 		02: aoc2019.Day02,
 	},
 	2020: {
 		01: aoc2020.Day01,
+		02: aoc2020.Day02,
 	},
 }
 
 type Go mg.Namespace
 
 func (Go) Run(year int, day int) {
-	fn := aoc[year][day]
+	fn, ok := aoc[year][day]
+	if !ok {
+		fmt.Println("Invalid Year/Date combination.")
+		return
+	}
 
 	fn()
 }
