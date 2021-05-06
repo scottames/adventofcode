@@ -31,7 +31,7 @@ func Day02() error {
 	return nil
 }
 
-// validatePassword returns a slice of ints based on the number of validators given and a possible error
+// validatePassword returns a slice of integers based on the number of validators given and a possible error
 // from a password entry as a string slice in the format: []string{"1-3","a","abcdefg"}
 func validatePassword(input []string, validators ...func(*password) bool) ([]int, error) {
 	var valid = make([]int, len(validators))
@@ -81,35 +81,6 @@ func validatorPart2(pp *password) bool {
 	return false
 }
 
-// intRange represents two ints that form a given range (min - max)
-type intRange struct {
-	max int
-	min int
-}
-
-// newIntRangeFromString returns a pointer to an intRange and a possible error
-// from a string of the format: "1-3"
-func newIntRangeFromString(r string) (*intRange, error) {
-	ss := strings.Split(r, "-")
-	if lenSS := len(ss); lenSS != 2 {
-		return nil, fmt.Errorf("expected numbered range (e.g. 1-3), got %s", r)
-	}
-	minString := ss[0]
-	min, err := strconv.Atoi(minString)
-	if err != nil {
-		return nil, fmt.Errorf("invalid minimum found in range: %s", minString)
-	}
-	maxString := ss[1]
-	max, err := strconv.Atoi(maxString)
-	if err != nil {
-		return nil, fmt.Errorf("invalid maximum found in range: %s", maxString)
-	}
-	return &intRange{
-		max: max,
-		min: min,
-	}, nil
-}
-
 // password represents a given password and it's requirements
 type password struct {
 	char     string
@@ -145,4 +116,33 @@ func passwordStrings(p string) ([]string, error) {
 		return nil, fmt.Errorf("expected 3 elements in password string, got %d", lenSS)
 	}
 	return ss, nil
+}
+
+// intRange represents two ints that form a given range (min - max)
+type intRange struct {
+	max int
+	min int
+}
+
+// newIntRangeFromString returns a pointer to an intRange and a possible error
+// from a string of the format: "1-3"
+func newIntRangeFromString(r string) (*intRange, error) {
+	ss := strings.Split(r, "-")
+	if lenSS := len(ss); lenSS != 2 {
+		return nil, fmt.Errorf("expected numbered range (e.g. 1-3), got %s", r)
+	}
+	minString := ss[0]
+	min, err := strconv.Atoi(minString)
+	if err != nil {
+		return nil, fmt.Errorf("invalid minimum found in range: %s", minString)
+	}
+	maxString := ss[1]
+	max, err := strconv.Atoi(maxString)
+	if err != nil {
+		return nil, fmt.Errorf("invalid maximum found in range: %s", maxString)
+	}
+	return &intRange{
+		max: max,
+		min: min,
+	}, nil
 }
