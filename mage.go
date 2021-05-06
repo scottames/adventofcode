@@ -25,6 +25,7 @@ var aoc map[int]map[int]func() error = map[int]map[int]func() error{
 
 type Go mg.Namespace
 
+// Run | run a given year / day in Golang
 func (Go) Run(year int, day int) {
 	fn, ok := aoc[year][day]
 	if !ok {
@@ -37,6 +38,7 @@ func (Go) Run(year int, day int) {
 
 type Rust mg.Namespace
 
+// Run | run a given year / day in Rust
 func (Rust) Run(year int, day int) {
 	// TODO: replace with proper AOC helper commands to call year/day
 	manifestPath := fmt.Sprintf("--manifest-path=%d/rust/Cargo.toml", year)
