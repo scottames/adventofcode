@@ -54,16 +54,8 @@ func validatorPart1(pp *password) bool {
 	if pp == nil {
 		return false
 	}
-	var count int
-	for _, c := range pp.password {
-		if string(c) == pp.char {
-			count++
-		}
-	}
-	if count < pp.intRange.min || count > pp.intRange.max {
-		return false
-	}
-	return true
+	count := strings.Count(pp.password, pp.char)
+	return count >= pp.intRange.min && count <= pp.intRange.max
 }
 
 // validatorPart2 validates the given password based on the formula given in "part 2"
