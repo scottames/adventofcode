@@ -6,7 +6,9 @@ import (
 	"github.com/scottames/adventofcode/pkg/helpers"
 )
 
-const sum = 2020
+const (
+	year = 2020
+)
 
 // Day01 - Day 1 Part 1 & 2
 func Day01() error {
@@ -43,7 +45,7 @@ func twoNumbersSum2020(list pie.Ints) pie.Ints {
 	bar := func(n int) bool {
 		fi++
 		for i, k := range list {
-			if fi != i && n+k == sum {
+			if fi != i && n+k == year {
 				return true
 			}
 		}
@@ -68,7 +70,7 @@ func threeNumbersSum2020(list pie.Ints) pie.Ints {
 	bar := func(n int) bool {
 		fi++
 		for i, k := range list {
-			x := sum - (n + k)
+			x := year - (n + k)
 			if fi != i && list.Contains(x) {
 				return true
 			}

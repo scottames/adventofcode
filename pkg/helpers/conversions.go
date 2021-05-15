@@ -31,6 +31,10 @@ func StringSplitNewlinesToInts(input []byte) (pie.Ints, error) {
 	return covertToInts(input, "\n")
 }
 
+func StringSplitNewlinesStrings(input []byte) pie.Strings {
+	return strings.Split(string(input), "\n")
+}
+
 func StringSplitCommaToStrings(csv []byte) pie.Strings {
 	return CovertBytesToStrings(csv, ",")
 }

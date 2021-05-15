@@ -7,7 +7,7 @@ import (
 	"strings"
 )
 
-// Day02 - Day 1 Part 1 & 2
+// Day02 - Day 2 Part 1 & 2
 func Day02() error {
 	get, err := helpers.ReadInput(2020, 2)
 	if err != nil {
