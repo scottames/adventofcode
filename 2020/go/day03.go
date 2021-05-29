@@ -8,7 +8,6 @@ import (
 
 const (
 	day03 = 3
-	one   = 1
 )
 
 var day3Part2Coordinates = trajectory.NewCoordinateses(

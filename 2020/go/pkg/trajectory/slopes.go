@@ -46,7 +46,7 @@ func (ss *Slopes) TreesEncountered() *pie.Ints {
 	}
 	trees := pie.Ints{}
 	for _, s := range *ss {
-		trees = trees.Append(s.Run().TreesEncountered())
+		trees = trees.Append(s.TreesEncountered())
 	}
 	return &trees
 }
