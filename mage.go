@@ -46,5 +46,11 @@ type Rust mg.Namespace
 func (Rust) Run(year int, day int) {
 	// TODO: replace with proper AOC helper commands to call year/day
 	manifestPath := fmt.Sprintf("--manifest-path=%d/rust/Cargo.toml", year)
-	sh.Run("cargo", "run", manifestPath)
+	sh.RunV("cargo", "run", manifestPath)
+}
+
+type Python mg.Namespace
+
+func (Python) Run(year int, day int) {
+	sh.RunV("python3", fmt.Sprintf("%d/python/day%02d.py", year, day))
 }
