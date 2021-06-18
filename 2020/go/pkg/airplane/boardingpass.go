@@ -85,8 +85,6 @@ func halving(s string, num int) int {
 	bottom := 0
 	for i, c := range s {
 		middle := (top + bottom) / 2
-		//fmt.Printf("---\ntop: %d\nmid: %d\nbot: %d\n", top, middle, bottom)
-		//fmt.Println("c: ", string(c))
 		switch string(c) {
 		case "B", "R":
 			bottom = middle + 1

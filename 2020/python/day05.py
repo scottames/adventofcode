@@ -17,26 +17,33 @@ def halving(string, num):
                 return bottom
     return 0
 
-def missing(l):
-    return [x for x in range(l[0], l[-1]+1)
-                               if x not in l]
 
-with open("input/2020/day5.txt") as input:
-    lines = input.readlines()
-    seats = []
-    for line in lines:
-        line = line.strip()
-        if line == "":
-            continue
-        rows = line[:7]
-        cols = line[7:]
-        seats.append(
-          halving(rows, 127) * 8 + halving(cols, 7)
-        )
-    seats.sort()
+def missing(lst):
+    return [x for x in range(lst[0], lst[-1] + 1)
+            if x not in lst]
 
-print("--- Part 1 ---\n")
-print("Highest: " + str(seats[-1]))
-print()
-print("--- Part 2 ---\n")
-print("Missing: " + str(missing(seats)))
+
+def main():
+    with open("input/2020/day5.txt") as txt:
+        lines = txt.readlines()
+        seats = []
+        for line in lines:
+            line = line.strip()
+            if line == "":
+                continue
+            rows = line[:7]
+            cols = line[7:]
+            seats.append(
+              halving(rows, 127) * 8 + halving(cols, 7)
+            )
+        seats.sort()
+    print("--- Part 1 ---\n")
+    print("Highest: " + str(seats[-1]))
+    print()
+    print("--- Part 2 ---\n")
+    print("Missing: " + str(missing(seats)))
+
+
+if __name__ == "__main__":
+    main()
+
