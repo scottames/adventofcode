@@ -1,9 +1,10 @@
 package helpers
 
 import (
-	"github.com/elliotchance/pie/pie"
 	"strconv"
 	"strings"
+
+	"github.com/elliotchance/pie/pie"
 )
 
 func covertToInts(input []byte, split string) (pie.Ints, error) {
@@ -31,8 +32,14 @@ func StringSplitNewlinesToInts(input []byte) (pie.Ints, error) {
 	return covertToInts(input, "\n")
 }
 
+// StringSplitNewlinesStrings returns a set of strings split on a single newline
 func StringSplitNewlinesStrings(input []byte) pie.Strings {
-	return strings.Split(string(input), "\n")
+	return strings.Split(strings.TrimSpace(string(input)), "\n")
+}
+
+// StringSplitNewlinesNewlinesStrings returns a set of strings split on two newlines
+func StringSplitNewlinesNewlinesStrings(input []byte) pie.Strings {
+	return strings.Split(strings.TrimSpace(string(input)), "\n\n")
 }
 
 func StringSplitCommaToStrings(csv []byte) pie.Strings {

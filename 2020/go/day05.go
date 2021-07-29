@@ -10,7 +10,7 @@ const (
 	day05 = 5
 )
 
-// Day05 - Day 4 Part 1 & 2
+// Day05 - Day 5 Part 1 & 2
 func Day05() error {
 	input, err := helpers.ReadInput(year, day05)
 	if err != nil {
