@@ -100,6 +100,8 @@ func (self Instructions) Fix() int {
 			newSelf[index].operation = "nop"
 		case "nop":
 			newSelf[index].operation = "jmp"
+		case "acc":
+			continue
 		}
 		result, final := newSelf.executeUntilBroken()
 		if final+1 == len(self) {
