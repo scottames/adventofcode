@@ -1,6 +1,6 @@
 # Advent of Code
 
-@scottames' advent of code solutions - just a bit of fun all in the hopes to have fun, explore & improve
+@scottames' [advent of code](https://adventofcode.com/) solutions - just a bit of fun all in the hopes to have fun, explore & improve
 
 ## Usage
 
