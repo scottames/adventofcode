@@ -18,8 +18,8 @@ func Day10() error {
 
 	// Part 1
 	helpers.PrintPart1()
-	diffs := jolts.NewChainDiffs(ints)
-	multiples, err := diffs.Multiples()
+	chain := jolts.NewChain(ints)
+	multiples, err := chain.Multiples()
 	helpers.ExitOnError(err)
 	fmt.Printf(
 		"Ones * Threes: %d\n\n",
@@ -28,6 +28,10 @@ func Day10() error {
 
 	// Part 2
 	helpers.PrintPart2()
+	fmt.Printf(
+		"Distinct Arrangements: %d\n\n",
+		chain.DistinctArrangements(),
+	)
 
 	return nil
 }
