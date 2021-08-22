@@ -3,6 +3,7 @@ package helpers
 import (
 	"fmt"
 	"io/ioutil"
+	"os"
 	"os/exec"
 	"strconv"
 	"strings"
@@ -27,4 +28,14 @@ func gitProjectRoot() (string, error) {
 		return "", err
 	}
 	return strings.TrimSpace(string(path)), nil
+}
+
+// FileExists returns a boolean as to whether
+// a file exists and is not a directory
+func FileExists(filename string) bool {
+	info, err := os.Stat(filename)
+	if os.IsNotExist(err) {
+		return false
+	}
+	return !info.IsDir()
 }

@@ -7,6 +7,7 @@ import (
 
 	aoc2019 "github.com/scottames/adventofcode/2019/go"
 	aoc2020 "github.com/scottames/adventofcode/2020/go"
+	"github.com/scottames/adventofcode/pkg/helpers"
 
 	//   "strings"
 
@@ -97,6 +98,14 @@ func (Rust) Run(year int, day int) {
 type Python mg.Namespace
 
 // Run | run a given year / day in Python
-func (Python) Run(year int, day int) {
-	sh.RunV("python3", fmt.Sprintf("%d/python/day%02d.py", year, day))
+func (Python) Run(year int, day int) error {
+	file := fmt.Sprintf("%d/python/day%02d.py", year, day)
+
+	if !helpers.FileExists(file) {
+		return fmt.Errorf("Python '%d' day '%d' not found", year, day)
+	}
+
+	sh.RunV("python3", file)
+
+	return nil
 }
