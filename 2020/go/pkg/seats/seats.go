@@ -75,12 +75,12 @@ func (self *Arrangement) Next(fn func(*Arrangement) ([]pie.Ints, int)) *Arrangem
 	}
 }
 
-func (self *Arrangement) NextUntilMatchingPart1() *Arrangement {
-	return self.NextUntilMatching(part1SeatingLogic)
+func (self *Arrangement) NextUntilMatchingAdjacent() *Arrangement {
+	return self.NextUntilMatching(seatingLogicAdjacent)
 }
 
-func (self *Arrangement) NextUntilMatchingPart2() *Arrangement {
-	return self.NextUntilMatching(part2SeatingLogic)
+func (self *Arrangement) NextUntilMatchingEightDirections() *Arrangement {
+	return self.NextUntilMatching(seatingLogicEightDirections)
 }
 
 func (self *Arrangement) NextUntilMatching(fn func(*Arrangement) ([]pie.Ints, int)) *Arrangement {
@@ -119,7 +119,7 @@ func newEmptySet(rows, cols int) []pie.Ints {
 	return r
 }
 
-func part1SeatingLogic(self *Arrangement) ([]pie.Ints, int) {
+func seatingLogicAdjacent(self *Arrangement) ([]pie.Ints, int) {
 	set := newEmptySet(self.rowLen(), self.columnLen())
 	totalOccupancy := 0
 	for ri, seats := range self.set {
@@ -172,7 +172,7 @@ func part1SeatingLogic(self *Arrangement) ([]pie.Ints, int) {
 	return set, totalOccupancy
 }
 
-func part2SeatingLogic(self *Arrangement) ([]pie.Ints, int) {
+func seatingLogicEightDirections(self *Arrangement) ([]pie.Ints, int) {
 	set := newEmptySet(self.rowLen(), self.columnLen())
 	totalOccupancy := 0
 

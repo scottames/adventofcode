@@ -22,14 +22,14 @@ func Day11() error {
 	helpers.PrintPart1()
 	fmt.Printf(
 		"Occupied seats: %d\n\n",
-		seats.NewArrangement(lines).NextUntilMatchingPart1().OccupiedSeats(),
+		seats.NewArrangement(lines).NextUntilMatchingAdjacent().OccupiedSeats(),
 	)
 
 	// Part 2
 	helpers.PrintPart2()
 	fmt.Printf(
 		"Occupied seats: %d\n\n",
-		seats.NewArrangement(lines).NextUntilMatchingPart2().OccupiedSeats(),
+		seats.NewArrangement(lines).NextUntilMatchingEightDirections().OccupiedSeats(),
 	)
 
 	return nil

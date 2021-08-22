@@ -188,70 +188,70 @@ func Test_NewArrangementFromStart(t *testing.T) {
 
 func Test_NextPart1Round1(t *testing.T) {
 	expected := part1Round1
-	actual := arrangement1.Next(part1SeatingLogic).set
+	actual := arrangement1.Next(seatingLogicAdjacent).set
 	msg := fmt.Sprintf("Expected %#v. Got %#v.", expected, actual)
 	assert.Equal(t, expected, actual, msg)
 }
 
 func Test_NextPart1Round2(t *testing.T) {
 	expected := part1Round2
-	actual := arrangementPart12.Next(part1SeatingLogic).set
+	actual := arrangementPart12.Next(seatingLogicAdjacent).set
 	msg := fmt.Sprintf("Expected %#v. Got %#v.", expected, actual)
 	assert.Equal(t, expected, actual, msg)
 }
 
 func Test_NextPart1Round3(t *testing.T) {
 	expected := part1Round3
-	actual := arrangementPart13.Next(part1SeatingLogic).set
+	actual := arrangementPart13.Next(seatingLogicAdjacent).set
 	msg := fmt.Sprintf("Expected %#v. Got %#v.", expected, actual)
 	assert.Equal(t, expected, actual, msg)
 }
 
 func Test_NextPart1Round4(t *testing.T) {
 	expected := part1Round4
-	actual := arrangementPart14.Next(part1SeatingLogic).set
+	actual := arrangementPart14.Next(seatingLogicAdjacent).set
 	msg := fmt.Sprintf("Expected %#v. Got %#v.", expected, actual)
 	assert.Equal(t, expected, actual, msg)
 }
 
 func Test_NextPart1Round5(t *testing.T) {
 	expected := part1Round5
-	actual := arrangementPart15.Next(part1SeatingLogic).set
+	actual := arrangementPart15.Next(seatingLogicAdjacent).set
 	msg := fmt.Sprintf("Expected %#v. Got %#v.", expected, actual)
 	assert.Equal(t, expected, actual, msg)
 }
 
-func Test_NextUntilMatchingPart1(t *testing.T) {
+func Test_NextUntilMatchingAdjacent(t *testing.T) {
 	expected := part1Round5
-	actual := NewArrangement(start).NextUntilMatchingPart1().set
+	actual := NewArrangement(start).NextUntilMatchingAdjacent().set
 	msg := fmt.Sprintf("Expected %#v. Got %#v.", expected, actual)
 	assert.Equal(t, expected, actual, msg)
 }
 
-func Test_NextUntilMatchingPart1Occupied(t *testing.T) {
+func Test_NextUntilMatchingAdjacentOccupied(t *testing.T) {
 	expected := 37
-	actual := NewArrangement(start).NextUntilMatchingPart1().OccupiedSeats()
+	actual := NewArrangement(start).NextUntilMatchingAdjacent().OccupiedSeats()
 	msg := fmt.Sprintf("Expected %#v. Got %#v.", expected, actual)
 	assert.Equal(t, expected, actual, msg)
 }
 
 func Test_NextPart2Round1(t *testing.T) {
 	expected := part2Round1
-	actual := arrangement1.Next(part2SeatingLogic).set
+	actual := arrangement1.Next(seatingLogicEightDirections).set
 	msg := fmt.Sprintf("Expected %#v. Got %#v.", expected, actual)
 	assert.Equal(t, expected, actual, msg)
 }
 
 func Test_NextPart2Round2(t *testing.T) {
 	expected := part2Round2
-	actual := arrangementPart22.Next(part2SeatingLogic).set
+	actual := arrangementPart22.Next(seatingLogicEightDirections).set
 	msg := fmt.Sprintf("Expected %#v. Got %#v.", expected, actual)
 	assert.Equal(t, expected, actual, msg)
 }
 
 func Test_NextPart2Round3(t *testing.T) {
 	expected := part2Round3
-	actual := arrangementPart23.Next(part2SeatingLogic).set
+	actual := arrangementPart23.Next(seatingLogicEightDirections).set
 	fmt.Println("----")
 	for i := range part2Round3 {
 		fmt.Println(part2Round3[i])
@@ -262,35 +262,35 @@ func Test_NextPart2Round3(t *testing.T) {
 
 func Test_NextPart2Round4(t *testing.T) {
 	expected := part2Round4
-	actual := arrangementPart24.Next(part2SeatingLogic).set
+	actual := arrangementPart24.Next(seatingLogicEightDirections).set
 	msg := fmt.Sprintf("Expected %#v. Got %#v.", expected, actual)
 	assert.Equal(t, expected, actual, msg)
 }
 
 func Test_NextPart2Round5(t *testing.T) {
 	expected := part2Round5
-	actual := arrangementPart25.Next(part2SeatingLogic).set
+	actual := arrangementPart25.Next(seatingLogicEightDirections).set
 	msg := fmt.Sprintf("Expected %#v. Got %#v.", expected, actual)
 	assert.Equal(t, expected, actual, msg)
 }
 
 func Test_NextPart2Round6(t *testing.T) {
 	expected := part2Round6
-	actual := arrangementPart26.Next(part2SeatingLogic).set
+	actual := arrangementPart26.Next(seatingLogicEightDirections).set
 	msg := fmt.Sprintf("Expected %#v. Got %#v.", expected, actual)
 	assert.Equal(t, expected, actual, msg)
 }
 
-func Test_NextUntilMatchingPart2(t *testing.T) {
+func Test_NextUntilMatchingEightDirections(t *testing.T) {
 	expected := part2Round6
-	actual := NewArrangement(start).NextUntilMatchingPart2().set
+	actual := NewArrangement(start).NextUntilMatchingEightDirections().set
 	msg := fmt.Sprintf("Expected %#v. Got %#v.", expected, actual)
 	assert.Equal(t, expected, actual, msg)
 }
 
-func Test_NextUntilMatchingPart2Occupied(t *testing.T) {
+func Test_NextUntilMatchingEightDirectionsOccupied(t *testing.T) {
 	expected := 26
-	actual := NewArrangement(start).NextUntilMatchingPart2().OccupiedSeats()
+	actual := NewArrangement(start).NextUntilMatchingEightDirections().OccupiedSeats()
 	msg := fmt.Sprintf("Expected %#v. Got %#v.", expected, actual)
 	assert.Equal(t, expected, actual, msg)
 }
