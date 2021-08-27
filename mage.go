@@ -56,7 +56,7 @@ var aoc map[int]map[int]func() error = map[int]map[int]func() error{
 		9:  aoc2020.Day09,
 		10: aoc2020.Day10,
 		11: aoc2020.Day11,
-		// 12: aoc2020.Day12,
+		12: aoc2020.Day12,
 		// 13: aoc2020.Day13,
 		// 14: aoc2020.Day14,
 		// 15: aoc2020.Day15,
