@@ -18,41 +18,18 @@ const (
 	Forward string = "F"
 )
 
-const (
-	north = heading(0)
-	east  = heading(90)
-	south = heading(180)
-	west  = heading(270)
-)
-
-// heading is an integer representation of the heading on a grid
-// assumed to be divisible by 90 and within 360 degrees
-type heading int
-
-// str returns the string representation of the heading
-func (self heading) str() string {
-	hm := map[heading]string{
-		north: North,
-		east:  East,
-		south: South,
-		west:  West,
-	}
-	return hm[self]
-}
-
 // NewActions returns a new set of Actions from a given slice of strings
-func NewActions(ss pie.Strings) (*Actions, error) {
-	// TODO - use https://pkg.go.dev/container/list
-	actions := Actions{}
+func NewActions(ss pie.Strings, start *Point, moveWaypoint bool) (*Actions, error) {
+	wps := Actions{}
 	for i, s := range ss {
-		action, err := NewAction(s, actions.tail)
+		wp, err := NewAction(s, wps.tail, start, moveWaypoint)
 		if err != nil {
 			return nil, fmt.Errorf("line %d - %w", i, err)
 		}
-		actions.Append(action)
+		wps.Append(wp)
 	}
 
-	return &actions, nil
+	return &wps, nil
 }
 
 // Actions represents a linked list of Actions
@@ -82,13 +59,13 @@ func (self Actions) Len() int {
 }
 
 // ManhattanDistance returns the ManhattanDistance from the last Action in the Actions list
-func (self Actions) ManhattanDistance() int {
+func (self Actions) ManhattanDistance() (int, error) {
 	return self.Last().ManhattanDistance()
 }
 
 // NewAction returns a new Action from the given string
 // linked to the previous Action, if provided
-func NewAction(s string, previous *Action) (*Action, error) {
+func NewAction(s string, previous *Action, start *Point, moveWaypoint bool) (*Action, error) {
 	action, units, err := parseAction(s)
 	if err != nil {
 		return nil, err
@@ -97,104 +74,125 @@ func NewAction(s string, previous *Action) (*Action, error) {
 	} else if units == nil {
 		return nil, fmt.Errorf("invalid units found")
 	}
+	if start == nil {
+		start = &Point{1, 0}
+	}
 
-	var coordinates point
-	var heading heading
+	var ship Point
+	var wp Point
 	if previous != nil {
-		coordinates, heading = previous.Result()
+		p, pp, err := previous.Result(moveWaypoint)
+		if err != nil {
+			return nil, err
+		}
+		ship, wp = *p, *pp
 	} else {
-		coordinates = point{0, 0}
-		heading = east
+		ship = Point{0, 0}
+		wp = *start
 	}
 
 	return &Action{
-		previous:    previous,
-		action:      *action,
-		heading:     heading,
-		units:       *units,
-		coordinates: coordinates,
+		previous:     previous,
+		action:       *action,
+		units:        *units,
+		ship:         ship,
+		waypoint:     wp,
+		moveWaypoint: moveWaypoint,
 	}, nil
 }
 
-// Action represents a single action in the given string of Actions that represents the Navigation
 type Action struct {
-	previous *Action
-
-	// TODO: make action a type
-	action      string
-	heading     heading
-	units       int
-	coordinates point
+	previous     *Action
+	action       string
+	units        int
+	ship         Point
+	waypoint     Point
+	moveWaypoint bool
 }
 
-// Result returns a new set of coordinates and the heading as a result of the given Action
-func (self *Action) Result() (point, heading) {
+func (self *Action) Result(moveWaypoint bool) (ship *Point, waypoint *Point, err error) {
 	action := self.action
 
 	switch action {
 	case Left, Right:
-		return self.coordinates, self.turn(self.action, self.units)
+		p, wp := self.ship, self.waypoint.turn(self.action, self.units)
+		return &p, &wp, nil
 	case Forward:
-		action = self.heading.str()
+		p, wp := self.MoveToWaypoint(self.units), self.waypoint
+		return &p, &wp, nil
 	}
 
-	// move in the given direction
-	return self.coordinates.addInDirection(action, self.units), self.heading
-}
-
-// turn returns a new heading given the direction
-func (self *Action) turn(direction string, degrees int) heading {
-	d := heading((degrees % 360))
-	if direction == Left {
-		return (self.heading + 360 - d) % 360
+	if moveWaypoint {
+		waypoint, err = self.waypoint.move(self.action, self.units)
+		ship = &self.ship
+	} else {
+		ship, err = self.ship.move(self.action, self.units)
+		waypoint = &self.waypoint
 	}
-	return (self.heading + d) % 360
+
+	return
 }
 
-// X returns the X coordinates for the given Action
-func (self *Action) X() int {
+func (self *Action) MoveToWaypoint(num int) Point {
+	p := self.ship
+	for i := 0; i < num; i++ {
+		p = p.add(Point(self.waypoint))
+	}
+	return p
+}
+
+func (self *Action) ManhattanDistance() (int, error) {
 	if self == nil {
-		return 0
+		return 0, fmt.Errorf("nil Waypoint")
 	}
 
-	return self.coordinates.x
+	p, _, err := self.Result(self.moveWaypoint)
+
+	return p.manhattanDistance(), err
 }
 
-// Y returns the Y coordinates for the given Action
-func (self *Action) Y() int {
-	if self == nil {
-		return 0
+func (self Point) move(action string, num int) (*Point, error) {
+	switch action {
+	case North:
+		return &Point{self.X, self.Y + num}, nil
+	case South:
+		return &Point{self.X, self.Y - num}, nil
+	case East:
+		return &Point{self.X + num, self.Y}, nil
+	case West:
+		return &Point{self.X - num, self.Y}, nil
 	}
-
-	return self.coordinates.y
+	return nil, fmt.Errorf("invalid action found when attempting to move waypoint: %s", action)
 }
 
-// ManhattanDistance returns the sum of the absolute values from the starting point
-// All Actions are assumed to have started at point{0,0} thus the ManhattanDistance is the
-// sum of the x & y coordinates
-func (self *Action) ManhattanDistance() int {
-	if self == nil {
-		return 0
+func (self Point) turn(action string, num int) Point {
+	p := self
+	x, y := 1, 1
+	switch action {
+	case Left:
+		y = -1
+	case Right:
+		x = -1
 	}
-
-	resultingPoint, _ := self.Result()
-
-	return resultingPoint.manhattanDistance()
+	for i := 0; i < (num / 90); i++ { // assuming num will always be one of: [90, 180, 270]
+		p = Point{(p.Y * y), (p.X * x)}
+	}
+	return p
 }
 
 // point represents a point on a grid - by the x & y axis
-type point struct {
-	x int
-	y int
+type Point struct {
+	X int
+	Y int
 }
 
 // add returns the result of adding a new point to the given point
-func (self point) add(p point) point {
-	return point{self.x + p.x, self.y + p.y}
+func (self Point) add(p Point) Point {
+	return Point{self.X + p.X, self.Y + p.Y}
 }
 
-func (self point) addInDirection(dir string, i int) point {
-	actionMap := map[string]point{
+func (self Point) addInDirection(dir string, i int) Point {
+	actionMap := map[string]Point{
 		North: {0, i},
 		South: {0, -i},
 		East:  {i, 0},
@@ -203,8 +201,8 @@ func (self point) addInDirection(dir string, i int) point {
 	return self.add(actionMap[dir])
 }
 
-func (self point) manhattanDistance() int {
-	return helpers.Absolute(self.x) + helpers.Absolute(self.y)
+func (self Point) manhattanDistance() int {
+	return helpers.Absolute(self.X) + helpers.Absolute(self.Y)
 }
 
 // parseAction returns a set of action & units and a possible error

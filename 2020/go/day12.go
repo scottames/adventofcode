@@ -16,7 +16,13 @@ func Day12() error {
 	input, err := helpers.ReadInput(year, day12)
 	helpers.ExitOnError(err)
 
-	actions, err := ferry.NewActions(helpers.CovertBytesToStrings(input, "\n"))
+	a1, err := ferry.NewActions(
+		helpers.CovertBytesToStrings(input, "\n"),
+		// refactor of part 1 inspired by @viking66:
+		// https://github.com/viking66/adventofcode/blob/master/src/Day12.hs
+		nil, false,
+	)
+	md1, err := a1.ManhattanDistance()
 	if err != nil {
 		return err
 	}
@@ -25,23 +31,26 @@ func Day12() error {
 	helpers.PrintPart1()
 	fmt.Printf(
 		"Manhattan distance: %d\n\n",
-		actions.ManhattanDistance(),
+		md1,
 	)
 
 	// Part 2
 	helpers.PrintPart2()
 
-	waypoints, err := ferry.NewWaypoints(helpers.CovertBytesToStrings(input, "\n"))
+	a2, err := ferry.NewActions(
+		helpers.CovertBytesToStrings(input, "\n"),
+		&ferry.Point{X: 10, Y: 1}, true,
+	)
 	if err != nil {
 		return err
 	}
-	md, err := waypoints.ManhattanDistance()
+	md2, err := a2.ManhattanDistance()
 	if err != nil {
 		return err
 	}
 	fmt.Printf(
 		"Manhattan distance: %d\n\n",
-		md,
+		md2,
 	)
 
 	return nil
