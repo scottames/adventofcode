@@ -57,7 +57,7 @@ var aoc map[int]map[int]func() error = map[int]map[int]func() error{
 		10: aoc2020.Day10,
 		11: aoc2020.Day11,
 		12: aoc2020.Day12,
-		// 13: aoc2020.Day13,
+		13: aoc2020.Day13,
 		// 14: aoc2020.Day14,
 		// 15: aoc2020.Day15,
 		// 16: aoc2020.Day16,
@@ -84,6 +84,10 @@ func (Go) Run(year int, day int) {
 	}
 
 	fn()
+}
+
+func (Go) Test() error {
+	return sh.RunV("go", "test", "./...")
 }
 
 type Rust mg.Namespace
