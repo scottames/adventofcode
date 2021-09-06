@@ -58,7 +58,7 @@ var aoc map[int]map[int]func() error = map[int]map[int]func() error{
 		11: aoc2020.Day11,
 		12: aoc2020.Day12,
 		13: aoc2020.Day13,
-		// 14: aoc2020.Day14,
+		14: aoc2020.Day14,
 		// 15: aoc2020.Day15,
 		// 16: aoc2020.Day16,
 		// 17: aoc2020.Day17,
@@ -76,14 +76,13 @@ var aoc map[int]map[int]func() error = map[int]map[int]func() error{
 type Go mg.Namespace
 
 // Run | run a given year / day in Golang
-func (Go) Run(year int, day int) {
+func (Go) Run(year int, day int) error {
 	fn, ok := aoc[year][day]
 	if !ok {
-		fmt.Println("Invalid Year/Date combination.")
-		return
+		return fmt.Errorf("Invalid Year/Date combination.")
 	}
 
-	fn()
+	return fn()
 }
 
 func (Go) Test() error {

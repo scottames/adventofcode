@@ -4,7 +4,7 @@ import "fmt"
 
 const (
 	oneInt          = 1
-	printPartString = "--- Part %d ---\n\n"
+	printPartString = "\n--- Part %d ---\n\n"
 	twoInt          = 2
 )
 
