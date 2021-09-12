@@ -2,17 +2,15 @@ package credentials
 
 import (
 	"fmt"
-	"github.com/stretchr/testify/assert"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 const (
 	// invalid
 	invalidPassport1 = `eyr:1972 cid:100
 hcl:#18171d ecl:amb hgt:170 pid:186cm iyr:2018 byr:1926`
-	invalidPassport2 = `iyr:2019
-hcl:#602927 eyr:1967 hgt:170cm
-ecl:grn pid:012533040 byr:1946`
 	invalidPassport3 = `hcl:dab227 iyr:2012
 ecl:brn hgt:182cm pid:021572410 eyr:2020 byr:1992 cid:277`
 	invalidPassport4 = `hgt:59cm ecl:zzz

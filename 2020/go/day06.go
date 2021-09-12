@@ -51,11 +51,7 @@ func sumCountsEveryone(groups pie.Strings) int {
 		people := strings.Split(group, "\n")
 		for _, person := range people {
 			for _, answer := range person {
-				if _, ok := a[answer]; ok {
-					a[answer] += 1
-				} else {
-					a[answer] = 1
-				}
+				a[answer]++
 			}
 		}
 		for answer, number := range a {
@@ -67,15 +63,12 @@ func sumCountsEveryone(groups pie.Strings) int {
 	return y.Len()
 }
 
-func uniqueString(s string) map[string]int {
-	foo := map[string]int{}
-	for _, b := range s {
-		bar := string(b)
-		if _, ok := foo[bar]; ok {
-			foo[bar]++
-		} else {
-			foo[bar] = 1
-		}
+func uniqueString(str string) map[string]int {
+	result := map[string]int{}
+	for _, c := range str {
+		s := string(c)
+		result[s]++
+
 	}
-	return foo
+	return result
 }

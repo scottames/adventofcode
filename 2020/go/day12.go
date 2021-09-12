@@ -22,6 +22,9 @@ func Day12() error {
 		// https://github.com/viking66/adventofcode/blob/master/src/Day12.hs
 		nil, false,
 	)
+	if err != nil {
+		return err
+	}
 	md1, err := a1.ManhattanDistance()
 	if err != nil {
 		return err
