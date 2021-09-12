@@ -18,17 +18,23 @@ func Day14() error {
 		return err
 	}
 
-	prog, err := port.InitializeProgram(helpers.StringSplitNewlinesStrings(input))
-	if err != nil {
-		return err
-	}
+	prog := port.NewProgram(helpers.StringSplitNewlinesStrings(input))
 
 	// Part 1
 	helpers.PrintPart1()
-	fmt.Printf("Sum of program values: %d\n", prog.Sum())
+	v1, err := prog.V1().Run()
+	if err != nil {
+		return err
+	}
+	fmt.Printf("Sum of program values: %d\n", v1.Sum())
 
 	// Part 2
 	helpers.PrintPart2()
+	v2, err := prog.V2().Run()
+	if err != nil {
+		return err
+	}
+	fmt.Printf("Sum of program values: %d\n", v2.Sum())
 
 	return nil
 }
