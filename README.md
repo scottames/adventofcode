@@ -22,8 +22,7 @@ mage -l
 1. [Mage](https://magefile.org/)
 1. [Rust](https://www.rust-lang.org/)
 
+## Resources
 
-## To Do
-
-* [ ] Convert example input to unit tests
-* [ ] Convert rust mage command to use rust aoc helper (or merely outline that here)
+- Other AOC solutions
+  - [j4rv](https://github.com/j4rv/advent-of-code-2020/)

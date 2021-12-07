@@ -1,4 +1,5 @@
-//+build mage
+//go:build mage
+// +build mage
 
 package main
 
@@ -7,9 +8,8 @@ import (
 
 	aoc2019 "github.com/scottames/adventofcode/2019/go"
 	aoc2020 "github.com/scottames/adventofcode/2020/go"
+	aoc2021 "github.com/scottames/adventofcode/2021/go"
 	"github.com/scottames/adventofcode/pkg/helpers"
-
-	//   "strings"
 
 	"github.com/magefile/mage/mg"
 	"github.com/magefile/mage/sh"
@@ -71,6 +71,9 @@ var aoc map[int]map[int]func() error = map[int]map[int]func() error{
 		// 24: aoc2020.Day24,
 		// 25: aoc2020.Day25,
 	},
+	2021: {
+		1: aoc2021.Day01,
+	},
 }
 
 type Go mg.Namespace
@@ -79,7 +82,7 @@ type Go mg.Namespace
 func (Go) Run(year int, day int) error {
 	fn, ok := aoc[year][day]
 	if !ok {
-		return fmt.Errorf("Invalid Year/Date combination.")
+		return fmt.Errorf("Invalid Year/Date combination - %d/%d not yet implemented", year, day)
 	}
 
 	return fn()
@@ -108,7 +111,5 @@ func (Python) Run(year int, day int) error {
 		return fmt.Errorf("Python '%d' day '%d' not found", year, day)
 	}
 
-	sh.RunV("python3", file)
-
-	return nil
+	return sh.RunV("python3", file)
 }
