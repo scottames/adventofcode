@@ -73,6 +73,7 @@ var aoc map[int]map[int]func() error = map[int]map[int]func() error{
 	},
 	2021: {
 		1: aoc2021.Day01,
+		2: aoc2021.Day02,
 	},
 }
 
