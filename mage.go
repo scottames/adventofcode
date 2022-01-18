@@ -15,34 +15,12 @@ import (
 	"github.com/magefile/mage/sh"
 )
 
-// TODO: make this more dynamic
+// TODO: make this more dynamic -> merge into Dayer interface
 var aoc map[int]map[int]func() error = map[int]map[int]func() error{
 	2019: {
 		1: aoc2019.Day01,
 		2: aoc2019.Day02,
 		3: aoc2019.Day03,
-		// 4:  aoc2019.Day04,
-		// 5:  aoc2019.Day05,
-		// 6:  aoc2019.Day06,
-		// 7:  aoc2019.Day07,
-		// 8:  aoc2019.Day08,
-		// 9:  aoc2019.Day09,
-		// 10: aoc2019.Day10,
-		// 11: aoc2019.Day11,
-		// 12: aoc2019.Day12,
-		// 13: aoc2019.Day13,
-		// 14: aoc2019.Day14,
-		// 15: aoc2019.Day15,
-		// 16: aoc2019.Day16,
-		// 17: aoc2019.Day17,
-		// 18: aoc2019.Day18,
-		// 19: aoc2019.Day19,
-		// 20: aoc2019.Day20,
-		// 21: aoc2019.Day21,
-		// 22: aoc2019.Day22,
-		// 23: aoc2019.Day23,
-		// 24: aoc2019.Day24,
-		// 25: aoc2019.Day25,
 	},
 	2020: {
 		1:  aoc2020.Day01,
@@ -59,17 +37,6 @@ var aoc map[int]map[int]func() error = map[int]map[int]func() error{
 		12: aoc2020.Day12,
 		13: aoc2020.Day13,
 		14: aoc2020.Day14,
-		// 15: aoc2020.Day15,
-		// 16: aoc2020.Day16,
-		// 17: aoc2020.Day17,
-		// 18: aoc2020.Day18,
-		// 19: aoc2020.Day19,
-		// 20: aoc2020.Day20,
-		// 21: aoc2020.Day21,
-		// 22: aoc2020.Day22,
-		// 23: aoc2020.Day23,
-		// 24: aoc2020.Day24,
-		// 25: aoc2020.Day25,
 	},
 	2021: {
 		1: aoc2021.Day01,
@@ -81,6 +48,37 @@ type Go mg.Namespace
 
 // Run | run a given year / day in Golang
 func (Go) Run(year int, day int) error {
+	if year == 2021 {
+		d, ok := aoc2021.Days[day]
+		if !ok {
+			return fmt.Errorf("Invalid Year/Date combination - %d/%d not yet implemented", year, day)
+		}
+
+		input, err := helpers.ReadInput(year, day)
+		if err != nil {
+			return err
+		}
+
+		err = d.Parse(input)
+		if err != nil {
+			return err
+		}
+
+		helpers.PrintPart1()
+		err = d.Part1()
+		if err != nil {
+			return err
+		}
+
+		helpers.PrintPart2()
+		err = d.Part2()
+		if err != nil {
+			return err
+		}
+
+		return nil
+	}
+
 	fn, ok := aoc[year][day]
 	if !ok {
 		return fmt.Errorf("Invalid Year/Date combination - %d/%d not yet implemented", year, day)
@@ -102,10 +100,10 @@ func (Rust) Run(year int, day int) {
 	sh.RunV("cargo", "run", manifestPath)
 }
 
-type Python mg.Namespace
+type Py mg.Namespace
 
 // Run | run a given year / day in Python
-func (Python) Run(year int, day int) error {
+func (Py) Run(year int, day int) error {
 	file := fmt.Sprintf("%d/python/day%02d.py", year, day)
 
 	if !helpers.FileExists(file) {
