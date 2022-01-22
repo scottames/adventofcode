@@ -5,21 +5,50 @@ import (
 	"strconv"
 
 	"github.com/elliotchance/pie/pie"
+	"github.com/jedib0t/go-pretty/v6/table"
+
 	"github.com/scottames/adventofcode/pkg/helpers"
+	"github.com/scottames/adventofcode/pkg/style"
 )
 
 type Day03 struct {
-	input     []byte
-	report    pie.Strings
-	colLen    int
-	gamma     pie.Strings
-	epsilon   pie.Strings
-	o2rating  int
-	co2rating int
+	input      []byte
+	report     pie.Strings
+	colLen     int
+	gamma      pie.Strings
+	gammaInt   int64
+	epsilon    pie.Strings
+	epsilonInt int64
+	o2rating   int64
+	co2rating  int64
 }
 
 func init() {
 	Days[3] = &Day03{}
+}
+
+func (d *Day03) String() string {
+	p1 := NewTableRounded()
+	p1.AppendHeader(table.Row{"Part 1"})
+	p1.AppendRows([]table.Row{
+		{style.Blue("gamma"), d.gamma.Join("")},
+		{style.Magenta("epsilon"), d.epsilon.Join("")},
+	})
+	p1.AppendFooter(table.Row{
+		style.Red("power consumption"), d.gammaInt * d.epsilonInt,
+	})
+
+	p2 := NewTableRounded()
+	p2.AppendHeader(table.Row{"Part 2"})
+	p2.AppendRows([]table.Row{
+		{style.Blue("o2 rating"), d.o2rating},
+		{style.Magenta("co2 rating"), d.co2rating},
+	})
+	p2.AppendFooter(table.Row{
+		style.Red("CO2 scrubber rating"), d.o2rating * d.co2rating,
+	})
+
+	return p1.Render() + "\n\n" + p2.Render()
 }
 
 func (d *Day03) Parse(input []byte) error {
@@ -40,44 +69,31 @@ func (d *Day03) Part1() error {
 		return err
 	}
 
-	gamma, err := d.binaryStringToInt(d.gamma.Join(""))
+	d.gammaInt, err = strconv.ParseInt(d.gamma.Join(""), 2, 64)
 	if err != nil {
 		return err
 	}
 
 	d.calcEpsilon()
-	epsilon, err := d.binaryStringToInt(d.epsilon.Join(""))
+	d.epsilonInt, err = strconv.ParseInt(d.epsilon.Join(""), 2, 64)
 	if err != nil {
 		return err
 	}
-
-	fmt.Println(d.gamma)
-	fmt.Println(d.epsilon)
-
-	fmt.Println("  gamma:   ", gamma)
-	fmt.Println("  epsilon: ", epsilon)
-	fmt.Println("  ---")
-	fmt.Println("  power consumption: ", gamma*epsilon)
 
 	return nil
 }
 
 func (d *Day03) Part2() error {
 	var err error
-	d.o2rating, err = d.binaryStringToInt(d.rating(commons{"1", "0"}))
+	d.o2rating, err = strconv.ParseInt(d.rating(commons{"1", "0"}), 2, 64)
 	if err != nil {
 		return err
 	}
 
-	d.co2rating, err = d.binaryStringToInt(d.rating(commons{"0", "1"}))
+	d.co2rating, err = strconv.ParseInt(d.rating(commons{"0", "1"}), 2, 64)
 	if err != nil {
 		return err
 	}
-
-	fmt.Println("  o2 rating:  ", d.o2rating)
-	fmt.Println("  co2 rating: ", d.co2rating)
-	fmt.Println("  ---")
-	fmt.Println("  CO2 scrubber rating: ", d.o2rating*d.co2rating)
 
 	return nil
 }
@@ -130,14 +146,6 @@ func (d *Day03) calcEpsilon() {
 		}
 		d.epsilon[col] = result
 	}
-}
-
-func (d *Day03) binaryStringToInt(s string) (int, error) {
-	i, err := strconv.ParseInt(s, 2, 64)
-	if err != nil {
-		return 0, fmt.Errorf("unable to parse string slice '%s': %w", s, err)
-	}
-	return int(i), nil
 }
 
 type commons struct {

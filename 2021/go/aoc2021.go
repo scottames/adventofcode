@@ -1,13 +1,9 @@
 package aoc2021
 
-type Dayer interface {
-	Parse([]byte) error
-	Part1() error
-	Part2() error
-}
+import "github.com/scottames/adventofcode/pkg/types"
 
-var Days map[int]Dayer
+var Days map[int]types.Dayer
 
 func init() {
-	Days = make(map[int]Dayer)
+	Days = make(map[int]types.Dayer)
 }

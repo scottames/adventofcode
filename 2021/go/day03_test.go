@@ -26,13 +26,15 @@ const (
 
 func Test_Day03(t *testing.T) {
 	expected := Day03{
-		input:     []byte(day03Example),
-		report:    helpers.StringSplitNewlinesStrings([]byte(day03Example)),
-		colLen:    5,
-		gamma:     pie.Strings{"1", "0", "1", "1", "0"},
-		epsilon:   pie.Strings{"0", "1", "0", "0", "1"},
-		o2rating:  23,
-		co2rating: 10,
+		input:      []byte(day03Example),
+		report:     helpers.StringSplitNewlinesStrings([]byte(day03Example)),
+		colLen:     5,
+		gamma:      pie.Strings{"1", "0", "1", "1", "0"},
+		gammaInt:   22,
+		epsilon:    pie.Strings{"0", "1", "0", "0", "1"},
+		epsilonInt: 9,
+		o2rating:   23,
+		co2rating:  10,
 	}
 
 	actual := Day03{}

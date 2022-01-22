@@ -12,7 +12,7 @@ import (
 	"github.com/scottames/adventofcode/pkg/helpers"
 
 	"github.com/magefile/mage/mg"
-	"github.com/magefile/mage/sh"
+	"github.com/scottames/cmder"
 )
 
 // TODO: make this more dynamic -> merge into Dayer interface
@@ -64,17 +64,17 @@ func (Go) Run(year int, day int) error {
 			return err
 		}
 
-		helpers.PrintPart1()
 		err = d.Part1()
 		if err != nil {
 			return err
 		}
 
-		helpers.PrintPart2()
 		err = d.Part2()
 		if err != nil {
 			return err
 		}
+
+		fmt.Println(d)
 
 		return nil
 	}
@@ -88,7 +88,7 @@ func (Go) Run(year int, day int) error {
 }
 
 func (Go) Test() error {
-	return sh.RunV("go", "test", "./...")
+	return cmder.New("go", "test", "./...").Run()
 }
 
 type Rust mg.Namespace
@@ -97,7 +97,7 @@ type Rust mg.Namespace
 func (Rust) Run(year int, day int) {
 	// TODO: replace with proper AOC helper commands to call year/day
 	manifestPath := fmt.Sprintf("--manifest-path=%d/rust/Cargo.toml", year)
-	sh.RunV("cargo", "run", manifestPath)
+	cmder.New("cargo", "run", manifestPath).Run()
 }
 
 type Py mg.Namespace
@@ -110,5 +110,5 @@ func (Py) Run(year int, day int) error {
 		return fmt.Errorf("Python '%d' day '%d' not found", year, day)
 	}
 
-	return sh.RunV("python3", file)
+	return cmder.New("python3", file).Run()
 }
